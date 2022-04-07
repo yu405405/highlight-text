@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>この文章に対して、指定の単語だけをハイライトします。ハイライトの単語は配列内に記述します。</p>
+
+    <script>
+        // ▼文字列を検索してハイライト用要素を加える処理
+        function replacer( str, word , att  ) {
+            let SearchString = '(' + word + ')';
+            let RegularExp = new RegExp( SearchString, "g" );
+            let ReplaceString = '<span class="' + att + '">$1</span>';
+            let ResString = str.replace( RegularExp , ReplaceString );
+            return ResString;
+        }
+        // ▼ハイライトを加える処理
+        function addhighlight() {
+            let forShow = document.body.innerHTML;
+            // ▼NGワードの指定
+            const NG_WORDS = ["ハイライト", "に"];
+            for(let i = 0; i < NG_WORDS.length; i++) {
+                forShow = replacer( forShow, NG_WORDS[i], "highlight" );
+                document.body.innerHTML = forShow;
+                let highlight = document.querySelectorAll('.highlight')
+                for(let i2 = 0; i2 < highlight.length; i2++) {
+                    highlight[i2].style.backgroundColor = 'red'
+                }
+            }
+        }
+        addhighlight();
+    </script>
+</body>
+</html>
